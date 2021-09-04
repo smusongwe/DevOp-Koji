@@ -54,7 +54,7 @@ pipeline {
         }  
         stage('docker push') {
             steps {
-                sh 'docker push ${ECRREGISTRY}/${IMAGENAME}:${IMAGE_TAG}'
+                sh 'sudo docker push ${ECRREGISTRY}/${IMAGENAME}:${IMAGE_TAG}'
             }
         }
 

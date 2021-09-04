@@ -45,13 +45,9 @@ pipeline {
                }
             }
           }
-          stage('AWS ecr login') {
+           stage('docker build and tag') {
             steps {
-                sh 'aws ecr get-login-password --region ${AWS_REGION} | docker login --username AWS --password-stdin ${ECRREGISTRY}'
-            }
-        }        
-         stage('docker build and tag') {
-            steps {
+                sh ''
                 sh 'docker build -t ${IMAGENAME}:${IMAGE_TAG} .'
                 sh 'docker tag ${IMAGENAME}:${IMAGE_TAG} ${ECRREGISTRY}/${IMAGENAME}:${IMAGE_TAG}'
             }

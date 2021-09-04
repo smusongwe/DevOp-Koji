@@ -47,7 +47,7 @@ pipeline {
           }
            stage('docker build and tag') {
             steps {
-                sh ''
+                sh 'cp ./webapp/target/*.war .'
                 sh 'docker build -t ${IMAGENAME}:${IMAGE_TAG} .'
                 sh 'docker tag ${IMAGENAME}:${IMAGE_TAG} ${ECRREGISTRY}/${IMAGENAME}:${IMAGE_TAG}'
             }

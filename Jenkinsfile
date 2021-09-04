@@ -31,26 +31,11 @@ pipeline {
         stage("build & SonarQube analysis") {
             agent any
             steps {
-              withSonarQubeEnv('sonarserver') {
-                sh "mvn clean package sonar:sonar  -Dsonar.host.url=http://35.84.211.197:9000 -Dsonar.login=b1c9f5661d6a345428f463f5579aee81e94de3c7 -Dsonar.projectKey=jjtech -Dsonar.projectName=Haplet -Dsonar.Version=1.0"
+                withSonarQubeEnv('sonarserver') {
+                  sh "mvn clean package sonar:sonar  -Dsonar.host.url=http://54.202.30.104:8443 -Dsonar.login=9d459e9a90f58879082ce0d24f02e929450af88b -Dsonar.projectKey=jjtech -Dsonar.projectName=Haplet -Dsonar.Version=1.0"
               }
             }
           }
-          stage('Deployment Approval') {
-            steps {
-              script {
-                timeout(time: 10, unit: 'MINUTES') {
-                 input(id: 'Deploy Gate', message: 'Deploy Application to Dev ?', ok: 'Deploy')
-                 }
-               }
-            }
-          }
-           stage('docker build and tag') {
-            steps {
-                sh 'cp ./webapp/target/*.war .'
-                sh 'sudo docker build -t ${IMAGENAME}:${IMAGE_TAG} .'
-                sh 'sudo docker tag ${IMAGENAME}:${IMAGE_TAG} ${ECRREGISTRY}/${IMAGENAME}:${IMAGE_TAG}'
-            }
-        }  
+
        }   
     }

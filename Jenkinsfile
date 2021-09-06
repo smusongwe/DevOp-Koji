@@ -64,7 +64,6 @@ pipeline {
                 sh 'aws ecs update-service --cluster ${ECS_CLUSTER} --service ${ECS_SERVICE} --force-new-deployment --region ${AWS_REGION}'
             }
         }  
-        
          stage('wait ecs service stable') {
             steps {
                 sh 'aws ecs wait services-stable --cluster ${ECS_CLUSTER} --service ${ECS_SERVICE} --region ${AWS_REGION}'
@@ -76,5 +75,5 @@ pipeline {
                   deleteDir()
         }
     }
-    }   
+   }   
  }

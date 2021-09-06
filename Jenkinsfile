@@ -51,6 +51,16 @@ pipeline {
                 sh 'sudo docker build -t ${IMAGENAME}:${IMAGE_TAG} .'
                 sh 'sudo docker tag ${IMAGENAME}:${IMAGE_TAG} ${ECRREGISTRY}/${IMAGENAME}:${IMAGE_TAG}'
             }
-        }  
+        } 
+          stage('docker push') {
+            steps {
+                sh 'sudo docker push ${ECRREGISTRY}/${IMAGENAME}:${IMAGE_TAG}'
+            }
+        }
+          stage('update ecs service') {
+            steps {
+                sh 'aws ecs update-service --cluster ${ECS_CLUSTER} --service ${ECS_SERVICE} --force-new-deployment --region ${AWS_REGION}'
+            }
+        }            
     }   
  }

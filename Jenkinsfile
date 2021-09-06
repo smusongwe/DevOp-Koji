@@ -56,7 +56,7 @@ pipeline {
         } 
         stage('Login To ECR') {
             steps {
-                sh '/usr/local/bin/aws ecr get-login-password --region ${AWS_REGION} | docker login --username AWS --password-stdin ${ECRREGISTRY}' 
+                sh 'sudo /usr/local/bin/aws ecr get-login-password --region ${AWS_REGION} | docker login --username AWS --password-stdin ${ECRREGISTRY}' 
             }
         }   
      // For non-release candidates, This can be as simple as tagging the artifact(s) with a timestamp and the build number of the job performing the CI/CD process.

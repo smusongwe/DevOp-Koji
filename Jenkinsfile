@@ -38,15 +38,6 @@ pipeline {
               }
             }
           }
-        stage('Deployment Approval') {
-            steps {
-              script {
-                timeout(time: 10, unit: 'MINUTES') {
-                 input(id: 'Deploy Gate', message: 'Deploy Application to Dev ?', ok: 'Deploy')
-                 }
-               }
-            }
-          }
          stage('docker build and tag') {
             steps {
                 sh 'cp ./webapp/target/*.war .'

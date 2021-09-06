@@ -19,12 +19,12 @@ pipeline {
             }
         }
 
-        stage('Compile') {
+      stage('Compile') {
             steps {
                 sh 'mvn clean package -DskipTests=true'
             }
         }
-        stage('Unit Tests') {
+       stage('Unit Tests') {
             steps {
                 sh 'mvn surefire:test'
             }
@@ -38,7 +38,7 @@ pipeline {
               }
             }
           }
-         stage('Deployment Approval') {
+        stage('Deployment Approval') {
             steps {
               script {
                 timeout(time: 10, unit: 'MINUTES') {
@@ -47,14 +47,14 @@ pipeline {
                }
             }
           }
-          stage('docker build and tag') {
+         stage('docker build and tag') {
             steps {
                 sh 'cp ./webapp/target/*.war .'
                 sh 'sudo docker build -t ${IMAGENAME}:${IMAGE_TAG} .'
                 sh 'sudo docker tag ${IMAGENAME}:${IMAGE_TAG} ${ECRREGISTRY}/${IMAGENAME}:${IMAGE_TAG}'
             }
         } 
-        stage('Deployment Approval') {
+       stage('Deployment Approval') {
             steps {
               script {
                 timeout(time: 20, unit: 'MINUTES') {
@@ -67,8 +67,7 @@ pipeline {
             steps {
                 sh '/usr/local/bin/aws ecr get-login-password --region ${AWS_REGION} | docker login --username AWS --password-stdin ${ECRREGISTRY}' 
             }
-        }
-         
+        }   
      // For non-release candidates, This can be as simple as tagging the artifact(s) with a timestamp and the build number of the job performing the CI/CD process.
         stage('Publish the Artifact to ECR') {
             steps {

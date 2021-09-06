@@ -9,6 +9,7 @@ pipeline {
         ECRREGISTRY = '007600611043.dkr.ecr.us-west-2.amazonaws.com'
         IMAGENAME = 'demomk'
         IMAGE_TAG = 'latest'
+        ECS_CLUSTER = 'ECS-SERGE-CLUSTER'
     }
     stages {
        stage ('Clone') {

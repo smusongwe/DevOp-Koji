@@ -54,6 +54,7 @@ pipeline {
         } 
           stage('docker push') {
             steps {
+                sh sudo 'aws ecr get-login-password --region us-west-2 | docker login --username AWS --password-stdin 007600611043.dkr.ecr.us-west-2.amazonaws.com'
                 sh 'sudo docker push ${ECRREGISTRY}/${IMAGENAME}:${IMAGE_TAG}'
             }
         }

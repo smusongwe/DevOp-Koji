@@ -36,5 +36,21 @@ pipeline {
               }
             }
           }
+         stage('Deployment Approval') {
+            steps {
+              script {
+                timeout(time: 10, unit: 'MINUTES') {
+                 input(id: 'Deploy Gate', message: 'Deploy Application to Dev ?', ok: 'Deploy')
+                 }
+               }
+            }
+          }
+          stage('docker build and tag') {
+            steps {
+                sh 'cp ./webapp/target/*.war .'
+                sh 'sudo docker build -t ${IMAGENAME}:${IMAGE_TAG} .'
+                sh 'sudo docker tag ${IMAGENAME}:${IMAGE_TAG} ${ECRREGISTRY}/${IMAGENAME}:${IMAGE_TAG}'
+            }
+        }  
     }   
  }

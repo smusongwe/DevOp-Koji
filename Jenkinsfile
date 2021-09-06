@@ -10,6 +10,7 @@ pipeline {
         IMAGENAME = 'demomk'
         IMAGE_TAG = 'latest'
         ECS_CLUSTER = 'ECS-SERGE-CLUSTER'
+        ECS_SERVICE = 'tomcat-webserver-service'
     }
     stages {
        stage ('Clone') {

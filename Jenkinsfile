@@ -36,46 +36,5 @@ pipeline {
               }
             }
           }
-           stage('Deployment Approval') {
-            steps {
-              script {
-                timeout(time: 10, unit: 'MINUTES') {
-                 input(id: 'Deploy Gate', message: 'Deploy Application to Dev ?', ok: 'Deploy')
-                 }
-               }
-            }
-          }
-          stage('docker build and tag') {
-            steps {
-                sh 'cp ./webapp/target/*.war .'
-                sh 'sudo docker build -t ${IMAGENAME}:${IMAGE_TAG} .'
-                sh 'sudo docker tag ${IMAGENAME}:${IMAGE_TAG} ${ECRREGISTRY}/${IMAGENAME}:${IMAGE_TAG}'
-            }
-        }  
-        stage('docker push') {
-            steps {
-                sh 'sudo docker push ${ECRREGISTRY}/${IMAGENAME}:${IMAGE_TAG}'
-            }
-        }
-           stage('update ecs service') {
-            steps {
-                sh 'aws ecs update-service --cluster ${ECS_CLUSTER} --service ${ECS_SERVICE} --force-new-deployment --region ${AWS_REGION}'
-            }
-        }            
-        
-         stage('wait ecs service stable') {
-            steps {
-                sh 'aws ecs wait services-stable --cluster ${ECS_CLUSTER} --service ${ECS_SERVICE} --region ${AWS_REGION}'
-            }
-        }                    
-    }
-      post {
-        always {
-            junit 'target/surefire-reports/TEST-*.xml'
-            deleteDir()
-        }
-       }
-     }
-
     }   
  }

@@ -69,11 +69,11 @@ pipeline {
                 sh 'aws ecs wait services-stable --cluster ${ECS_CLUSTER} --service ${ECS_SERVICE} --region ${AWS_REGION}'
             }
         } 
-        post {
-             always {
-             junit 'target/surefire-reports/TEST-*.xml'
-             deleteDir()
+    post {
+        always {
+            junit 'target/surefire-reports/TEST-*.xml'
+            deleteDir()
         }
     }
-   }   
- }
+   }
+}

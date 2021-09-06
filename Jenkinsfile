@@ -32,7 +32,7 @@ pipeline {
             agent any
             steps {
                 withSonarQubeEnv('sonarserver') {
-                  sh "mvn clean package sonar:sonar  -Dsonar.host.url=http://54.202.30.104:8443 -Dsonar.login=9d459e9a90f58879082ce0d24f02e929450af88b -Dsonar.projectKey=jjtech -Dsonar.projectName=Haplet -Dsonar.Version=1.0"
+                  sh "mvn clean package sonar:sonar  -Dsonar.host.url=http://34.221.157.212:8443 -Dsonar.login=9d459e9a90f58879082ce0d24f02e929450af88b -Dsonar.projectKey=jjtech -Dsonar.projectName=Haplet -Dsonar.Version=1.0"
               }
             }
           }
